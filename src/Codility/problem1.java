@@ -1,6 +1,7 @@
 package Codility;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class problem1 {
@@ -8,77 +9,44 @@ public class problem1 {
     public static void main(String[] args) {
 
         problem1 pb = new problem1();
-        int n = 1041 ;
+        int n = 173 ;
         int result = pb.solution(n);
-//        System.out.println(result);
     }
 
     public int solution(int N) {
 
-        int mok = N;
+        String str = Integer.toBinaryString(N);
         List<Integer> list = new ArrayList<>();
+        int max = 0;
 
-        // 2진수 구하기
-        while (mok > 0) {
-            int nmg = mok % 2;
-            mok = mok / 2;
-            list.add(nmg);
-        }
-
-        int count = 1;
-        int temp = 0;
-        int[] arr = new int[list.size()];
-
-        int index = 0;
-
-        // 구한 2진수 값(역순)을 배열 arr에 할당
-        for (int i = list.size() - 1; i >= 0; i--) {
-            arr[index] = list.get(i);
-            index = index + 1;
-        }
-
-        // 0 개수 count
-        for (int j = 0; j < arr.length - 1; j++) {
-            if (arr[j] != 1) {
-                if (arr[j] == 0 && arr[j + 1] == 0) {
-                    count++;
-                }
-            } else {
-                temp = count;
-                count = 1;
+        // 1이 들어있는 인덱스를 list에 넣는다.
+        for(int i = 0; i<str.length(); i++){
+            if(str.charAt(i) == '1'){
+                list.add(i);
             }
         }
 
-        if(temp > count){
-            return temp ;
-        }else if(count < temp){
-            return count;
-        }else {
-            return 0;
+        if(list.size() <= 1){
+            return max;
+        }else{
+            // 1이 들어있는 인덱스를 저장
+            List<Integer> list2 = new ArrayList<>();
+
+            for(int j = 0; j<list.size()-1; j++){
+                // -1 => 인덱스는 0부터 시작
+                list2.add(list.get(j+1) - list.get(j) -1);
+            }
+
+            // 1이 들어있는 인덱스의 차이를 구한 후, 가장 큰값을 찾는다.
+            max = Collections.max(list2);
+
         }
+
+
+        return max;
 
     }
 
 
-
-// 1  0  0  0  0  0  1  0  0  0  1
-// 0  1  2  3  4  5  6  7  8  9  10
-// System.out.println("count : " + count);
-//        System.out.println("temp : " + temp);
-//        return 0;
-//        System.out.println("j   : " + j);
-//                System.out.println("j+1 : " + (j + 1));
-//                System.out.println();
-// 경우의 수
-// !(arr[j] == 0 && arr[j+1] == 1) && !(arr[j] == 1 && arr[j+1] == 0) && !(arr[j] == 1 && arr[j+1] == 1)
-// j    j+1
-// 0    0
-// 0    1   !(arr[j] == 0 && arr[j+1] == 1) && !(arr[j] == 1 && arr[j+1] == 0) && !(arr[j] == 1 && arr[j+1] == 1)
-// 1    0   !(arr[j] == 1 && arr[j+1] == 0)
-// 1    1   !(arr[j] == 1 && arr[j+1] == 1)
-
-//                    System.out.println("j   : " + j);
-//                    System.out.println("j+1 : " + (j + 1));
-//                    System.out.println();
 
 }

@@ -8,64 +8,54 @@ public class problem1 {
     public static void main(String[] args) {
 
         problem1 pb = new problem1();
-        int n = 33 ;
+        int n = 32;
         int result = pb.solution(n);
 //        System.out.println(result);
     }
 
-//    public int solution(int N) {
-//        int result = 0;
-//        int CurrenBinaryGap = 0;
-//
-//        String str = Integer.toBinaryString(N);
-//        System.out.println("2진수 : " + str);
-//
-//        for(int i=0; i<str.length(); i++){
-//            if(str.charAt(i) == '0'){
-//                System.out.println(CurrenBinaryGap);
-//                CurrenBinaryGap++;
-//            }else{
-//                if(CurrenBinaryGap > result){
-//                    result = CurrenBinaryGap;
-//                }
-//                CurrenBinaryGap = 0;
-//            }
-//            // 0이면 증가. 0이 아니면 이전값과 비교해서 현재값이 이전값보다 크면 result에 현재값 넣는다
-//            // 이전값보다 작다면 현재값 = 0
-//        }
-//        return result;
-//    }
-
-
     public int solution(int N) {
-        List<String> list = new ArrayList<>();
-        String[] str = Integer.toBinaryString(N).split("");
-        System.out.println("2진수  : "  + Integer.toBinaryString(N));
-        int count = 0;
-        int temp = 0;
 
-        for(int i=0; i<str.length; i++){
-            if(!str[i].equals("1")){
-                if(str[i].equals("0") && str[i+1].equals("0")){
+        int mok = N;
+        List<Integer> list = new ArrayList<>();
+
+        // 2진수 구하기
+        while (mok > 0) {
+            int nmg = mok % 2;
+            mok = mok / 2;
+            list.add(nmg);
+        }
+
+        int count = 1;
+        int temp = 0;
+        int[] arr = new int[list.size()];
+
+        int index = 0;
+
+        // 구한 2진수 값(역순)을 배열 arr에 할당
+        for (int i = list.size() - 1; i >= 0; i--) {
+            arr[index] = list.get(i);
+            index = index + 1;
+        }
+
+        // 0 개수 count
+        for (int j = 0; j < arr.length - 1; j++) {
+            if (arr[j] != 1) {
+                if (arr[j] == 0 && arr[j + 1] == 0) {
                     count++;
                 }
-            }else{
+            } else {
                 temp = count;
-                count = 0;
+                count = 1;
             }
-// 1과 1 사이의 0의 개수를 찾아라.
-            
-//            if(str[i].equals("0") && str[i+1].equals("0")){
-//                count++;
-//            }else{
-//                temp = count;
-//                count = 0;
-//            }
-        } // end of for
+        }
 
-        System.out.println("count  : "  + count);
-        System.out.println("temp  : "  + temp);
+        if(temp > count){
+            return temp ;
+        }else if(count < temp){
+            return count;
+        }else {
+            return 0;
+        }
 
-        return 0;
     }
 }
